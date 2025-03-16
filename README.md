@@ -15,8 +15,6 @@ The service is configured using environment variables. The following environment
 
 - `ETH_CLIENTS`: Comma-separated list of Ethereum client URLs.
 - `SERVER_ADDRESS`: Address and port for the main service (e.g., `:8080`).
-- `HEALTH_CHECK_ADDRESS`: Address and port for the health check endpoint (e.g., `:8081`).
-
 
 ## Running steps:
 - Set your docker-hub-username instead of <DOCKER_HUB_USERNAME> inside .kube/deployment.yaml
@@ -46,4 +44,9 @@ docker push docker-hub-username/alluvial-task:latest
 - Execute getBalance request
 ```sh
 curl -X GET localhost:8080/getBalance/<wallet-address>
+```
+
+## Metrics
+```sh
+curl -X GET localhost:8080/metrics
 ```
