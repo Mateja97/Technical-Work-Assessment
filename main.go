@@ -1,10 +1,11 @@
 package main
 
 import (
+	_ "alluvial-task/metrics"
+
 	"alluvial-task/client"
 	"alluvial-task/config"
 	"alluvial-task/handler"
-	_ "alluvial-task/metrics"
 	"alluvial-task/server"
 	"alluvial-task/service"
 	"context"
