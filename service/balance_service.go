@@ -92,7 +92,9 @@ func (s *BalanceService) queryClient(clientURL, address string) (string, error) 
 	if err != nil {
 		return "", fmt.Errorf("failed to make request to Ethereum client: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {

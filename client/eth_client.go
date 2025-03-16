@@ -38,6 +38,6 @@ func (p *EthClientPool) GetClients(n int) []string {
 		client := p.clients[(p.index+i)%len(p.clients)]
 		selectedClients = append(selectedClients, client)
 	}
-	p.index = (p.index + n) % len(p.clients) // Update the index
+	p.index = (p.index + n) % len(p.clients) // Update the index - round-robin method
 	return selectedClients
 }

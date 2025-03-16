@@ -45,6 +45,7 @@ func Start() {
 }
 
 func Shutdown(ctx context.Context) error {
+	log.Println("Shutting down server...")
 	if err := srv.Shutdown(ctx); err != nil {
 		return err
 	}

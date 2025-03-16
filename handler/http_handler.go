@@ -24,7 +24,7 @@ func (h *HttpHandler) GetBalance(w http.ResponseWriter, r *http.Request) {
 		metrics.BalanceRequestDuration.Observe(duration)
 	}()
 
-	metrics.BalanceRequests.Inc()
+	metrics.BalanceRequestsCounter.Inc()
 	address := strings.TrimPrefix(r.URL.Path, "/getBalance/")
 	if address == "" {
 		http.Error(w, "Ethereum address is required", http.StatusBadRequest)

@@ -4,6 +4,7 @@ import (
 	"alluvial-task/client"
 	"alluvial-task/config"
 	"alluvial-task/handler"
+	_ "alluvial-task/metrics"
 	"alluvial-task/server"
 	"alluvial-task/service"
 	"context"
@@ -38,7 +39,6 @@ func main() {
 	signal.Notify(stopChan, syscall.SIGTERM)
 
 	<-stopChan
-	log.Println("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
