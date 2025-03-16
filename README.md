@@ -2,19 +2,11 @@
 
 This project is a Golang-based service that proxies the `eth_getBalance` RPC endpoint from the Ethereum execution layer. It is designed to be highly available (HA) and supports multiple Ethereum clients behind the proxy. The service also exposes Prometheus metrics and provides liveness and readiness HTTP endpoints for Kubernetes integration.
 
-## Features
-
-- **High Availability (HA)**: The service is designed to handle multiple Ethereum clients, ensuring redundancy and fault tolerance.
-- **Multiple Ethereum Clients**: Supports multiple Ethereum execution node clients (e.g., Infura, Alchemy, Tenderly).
-- **Inconsistent Data Handling**: Implements a strategy to handle inconsistent data returned by different Ethereum clients.
-- **Prometheus Metrics**: Exposes metrics at the `/metrics` endpoint for monitoring.
-- **Liveness and Readiness Probes**: Provides HTTP endpoints for Kubernetes liveness and readiness checks.
-
 ## Prerequisites
 
-- Go 1.19 or higher
+- Go 1.23.6
 - Docker
-- Kubernetes cluster (e.g., Minikube, GKE, EKS)
+- Kubernetes cluster (e.g., Minikube, GKE, EKS) - Minikube example shown here
 - Ethereum client API keys (e.g., Infura, Alchemy, Tenderly)
 
 ## Configuration
@@ -25,7 +17,33 @@ The service is configured using environment variables. The following environment
 - `SERVER_ADDRESS`: Address and port for the main service (e.g., `:8080`).
 - `HEALTH_CHECK_ADDRESS`: Address and port for the health check endpoint (e.g., `:8081`).
 
-Example configuration:
 
+## Running steps:
+- Set your docker-hub-username instead of <DOCKER_HUB_USERNAME> inside .kube/deployment.yaml
+- Start kubernetes cluster:
+```sh
+minikube start
+```
+- Build image:
+```sh
+docker build -t  docker-hub-username/alluvial-task:latest .
+```
+- Push image:
+```sh
+docker push docker-hub-username/alluvial-task:latest 
+```
+- Apply kubernetes config:
+```sh
+ kubectl apply -f .kube/pod.yaml 
+ kubectl apply -f .kube/service.yaml 
+```
 
-
+## Testing steps:
+- Port forward:
+```sh
+ kubectl port-forward service/alluvial-task 8080:8080
+```
+- Execute getBalance request
+```sh
+curl -X GET localhost:8080/getBalance/<wallet-address>
+```
